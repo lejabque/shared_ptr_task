@@ -22,17 +22,17 @@ struct control_block {
 };
 
 template<typename T, typename D>
-struct regular_control_block final : control_block {
+struct regular_control_block final : control_block, D {
   explicit regular_control_block(T* ptr, D deleter)
       : ptr(ptr),
-        deleter(std::move(deleter)) {
+        D(std::move(deleter)) {
     add_ref();
   }
 
   ~regular_control_block() override = default;
 
   void delete_object() noexcept override {
-    deleter(ptr);
+    static_cast<D&>(*this)(ptr);
   }
 
   T* get() const noexcept {
@@ -41,7 +41,6 @@ struct regular_control_block final : control_block {
 
  private:
   T* ptr;
-  D deleter;
 };
 
 template<typename T>
