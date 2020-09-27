@@ -104,7 +104,7 @@ struct shared_ptr {
   }
 
   void reset() noexcept {
-    reset<T>(nullptr);
+    reset < T > (nullptr);
   }
 
   template<typename U>
@@ -142,24 +142,6 @@ struct shared_ptr {
   }
 
   explicit operator bool() const noexcept {
-    return get() != nullptr;
-  }
-
-  template<typename U>
-  bool operator==(const shared_ptr<U>& other) const noexcept {
-    return other.get() == get();
-  }
-
-  bool operator==(std::nullptr_t) const noexcept {
-    return get() == nullptr;
-  }
-
-  template<typename U>
-  bool operator!=(const shared_ptr<U>& other) const noexcept {
-    return !(*this == other);
-  }
-
-  bool operator!=(std::nullptr_t) const noexcept {
     return get() != nullptr;
   }
 
@@ -223,6 +205,16 @@ bool operator==(std::nullptr_t, const shared_ptr<T>& rhs) noexcept {
 template<typename T>
 bool operator!=(std::nullptr_t, const shared_ptr<T>& rhs) noexcept {
   return !(rhs == nullptr);
+}
+
+template<typename T>
+bool operator==(const shared_ptr<T>& lhs, std::nullptr_t) noexcept {
+  return lhs.get() == nullptr;
+}
+
+template<typename T>
+bool operator!=(const shared_ptr<T>& lhs, std::nullptr_t) noexcept {
+  return !(lhs.get() == nullptr);
 }
 
 template<typename T>
