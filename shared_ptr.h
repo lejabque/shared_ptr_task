@@ -21,13 +21,12 @@ struct shared_ptr {
       : shared_ptr(ptr, std::default_delete<Y>()) {}
 
   template<typename Y, typename D>
-  shared_ptr(Y* ptr, D deleter) : ptr(ptr) {
-    try {
-      cblock = new regular_control_block<Y, D>(ptr, deleter);
-    } catch (...) {
-      deleter(ptr);
-      throw;
-    }
+  shared_ptr(Y* ptr, D deleter)
+  try : ptr(ptr),
+        cblock(new regular_control_block<Y, D>(ptr, deleter)) {}
+  catch (...) {
+    deleter(ptr);
+    throw;
   }
 
   template<class D>

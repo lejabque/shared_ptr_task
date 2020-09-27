@@ -14,7 +14,7 @@ struct control_block {
   std::size_t weak_count() const noexcept;
 
   virtual ~control_block() = default;
-  virtual void delete_object() const noexcept = 0;
+  virtual void delete_object() noexcept = 0;
 
  private:
   std::size_t n_refs;
@@ -31,9 +31,8 @@ struct regular_control_block final : control_block {
 
   ~regular_control_block() override = default;
 
-  void delete_object() const noexcept override {
+  void delete_object() noexcept override {
     deleter(ptr);
-    ptr = nullptr;
   }
 
   T* get() const noexcept {
@@ -55,11 +54,11 @@ struct inplace_control_block final : control_block {
 
   ~inplace_control_block() override = default;
 
-  void delete_object() const noexcept override {
+  void delete_object() noexcept override {
     get()->~T();
   }
 
-  T* get() const noexcept {
+  T* get() noexcept {
     return reinterpret_cast<T*>(&data);
   }
 
