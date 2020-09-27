@@ -86,16 +86,7 @@ struct shared_ptr {
 
   shared_ptr& operator=(shared_ptr&& other) {
     if (this != &other) {
-      if (cblock != other.cblock) {
-        shared_ptr<T>(std::move(other)).swap(*this);
-      } else {
-        ptr = other.ptr;
-        if (cblock != nullptr) {
-          cblock->del_ref();
-        }
-        other.cblock = nullptr;
-        other.ptr = nullptr;
-      }
+      shared_ptr<T>(std::move(other)).swap(*this);
     }
     return *this;
   }
@@ -261,16 +252,7 @@ struct weak_ptr {
 
   weak_ptr& operator=(weak_ptr&& other) {
     if (this != &other) {
-      if (cblock != other.cblock) {
-        weak_ptr<T>(std::move(other)).swap(*this);
-      } else {
-        ptr = other.ptr;
-        if (cblock != nullptr) {
-          cblock->del_weak();
-        }
-        other.cblock = nullptr;
-        other.ptr = nullptr;
-      }
+      weak_ptr<T>(std::move(other)).swap(*this);
     }
     return *this;
   }
