@@ -6,9 +6,7 @@ control_block::control_block() noexcept
 
 void control_block::add_ref() noexcept {
   n_refs++;
-  if (n_weak == 0) {
-    n_weak++;
-  }
+  n_weak++;
 }
 
 void control_block::add_weak() noexcept {
@@ -17,9 +15,7 @@ void control_block::add_weak() noexcept {
 
 void control_block::del_ref() noexcept {
   n_refs--;
-  if (n_refs == 0) {
-    n_weak--;
-  }
+  n_weak--;
 }
 
 void control_block::del_weak() noexcept {

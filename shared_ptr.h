@@ -13,8 +13,7 @@ struct shared_ptr {
         ptr(nullptr) {}
 
   constexpr explicit shared_ptr(std::nullptr_t) noexcept
-      : cblock(nullptr),
-        ptr(nullptr) {}
+      : shared_ptr() {}
 
   template<typename Y>
   explicit shared_ptr(Y* ptr)
@@ -173,13 +172,7 @@ struct shared_ptr {
 template<typename T, typename... Args>
 shared_ptr<T> make_shared(Args&& ... args) {
   shared_ptr<T> res;
-  inplace_control_block<T>* cblock;
-  try {
-    cblock = new inplace_control_block<T>(std::forward<Args>(args)...);
-  } catch (...) {
-    delete cblock;
-    throw;
-  }
+  auto* cblock = new inplace_control_block<T>(std::forward<Args>(args)...);
   res.ptr = cblock->get();
   res.cblock = cblock;
   return res;
@@ -291,10 +284,6 @@ struct weak_ptr {
       cblock->add_ref();
     }
     return res;
-  }
-
-  explicit operator bool() const noexcept {
-    return cblock != nullptr && cblock->ref_count() != 0;
   }
 
  private:

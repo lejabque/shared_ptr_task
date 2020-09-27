@@ -62,5 +62,5 @@ struct inplace_control_block final : control_block {
   }
 
  private:
-  typename std::aligned_storage_t<sizeof(T), alignof(T)> data;
+  std::aligned_storage_t<sizeof(T), alignof(T)> data;
 };
