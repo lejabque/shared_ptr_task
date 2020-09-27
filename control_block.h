@@ -19,6 +19,7 @@ struct control_block {
  private:
   std::size_t n_refs;
   std::size_t n_weak; // >= 1 if there is at least one ref
+
 };
 
 template<typename T, typename D>

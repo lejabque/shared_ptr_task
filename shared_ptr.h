@@ -86,13 +86,21 @@ struct shared_ptr {
 
   shared_ptr& operator=(shared_ptr&& other) {
     if (this != &other) {
-      shared_ptr<T>(std::move(other)).swap(*this);
+      if (cblock != other.cblock) {
+        shared_ptr<T>(std::move(other)).swap(*this);
+      } else {
+        ptr = other.ptr;
+        other.cblock = nullptr;
+        other.ptr = nullptr;
+      }
     }
     return *this;
   }
 
   ~shared_ptr() {
-    unlink_cblock();
+    if (cblock != nullptr) {
+      cblock->del_ref();
+    }
   }
 
   void swap(shared_ptr& other) noexcept {
@@ -112,7 +120,9 @@ struct shared_ptr {
 
   template<typename U, typename D>
   void reset(U* new_ptr, D new_deleter) {
-    unlink_cblock();
+    if (cblock != nullptr) {
+      cblock->del_ref();
+    }
     try {
       ptr = new_ptr;
       cblock = new regular_control_block<U, D>(new_ptr, std::move(new_deleter));
@@ -154,18 +164,6 @@ struct shared_ptr {
  private:
   control_block* cblock;
   T* ptr;
-
-  void unlink_cblock() {
-    if (cblock != nullptr) {
-      cblock->del_ref();
-      if (cblock->ref_count() == 0) {
-        cblock->delete_object();
-        if (cblock->weak_count() == 0) {
-          delete cblock;
-        }
-      }
-    }
-  }
 };
 
 template<typename T, typename... Args>
@@ -260,13 +258,21 @@ struct weak_ptr {
 
   weak_ptr& operator=(weak_ptr&& other) {
     if (this != &other) {
-      weak_ptr<T>(std::move(other)).swap(*this);
+      if (cblock != other.cblock) {
+        weak_ptr<T>(std::move(other)).swap(*this);
+      } else {
+        ptr = other.ptr;
+        other.cblock = nullptr;
+        other.ptr = nullptr;
+      }
     }
     return *this;
   }
 
   ~weak_ptr() {
-    unlink_cblock();
+    if (cblock != nullptr) {
+      cblock->del_weak();
+    }
   }
 
   void swap(weak_ptr& other) noexcept {
@@ -288,14 +294,5 @@ struct weak_ptr {
  private:
   control_block* cblock;
   T* ptr;
-
-  void unlink_cblock() {
-    if (cblock != nullptr) {
-      cblock->del_weak();
-      if (cblock->ref_count() == 0 && cblock->weak_count() == 0) {
-        delete cblock;
-      }
-    }
-  }
 };
 }
