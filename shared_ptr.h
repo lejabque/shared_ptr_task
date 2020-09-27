@@ -30,8 +30,7 @@ struct shared_ptr {
 
   template<class D>
   shared_ptr(std::nullptr_t, D deleter)
-      : cblock(nullptr),
-        ptr(nullptr) {}
+      : shared_ptr() {}
 
   template<typename U>
   shared_ptr(const shared_ptr<U>& other, T* ptr) noexcept
