@@ -104,17 +104,25 @@ struct shared_ptr {
   }
 
   void reset() noexcept {
-    shared_ptr<T>().swap(*this);
+    reset<T>(nullptr);
   }
 
   template<typename U>
   void reset(U* ptr) {
-    shared_ptr<T>(ptr).swap(*this);
+    reset(ptr, std::default_delete<U>());
   }
 
   template<typename U, typename D>
-  void reset(U* ptr, D deleter) {
-    shared_ptr<T>(ptr, deleter).swap(*this);
+  void reset(U* new_ptr, D new_deleter) {
+    unlink_cblock();
+    try {
+      ptr = new_ptr;
+      cblock = new regular_control_block<U, D>(new_ptr, std::move(new_deleter));
+    }
+    catch (...) {
+      new_deleter(new_ptr);
+      throw;
+    }
   }
 
   T* get() const noexcept {
