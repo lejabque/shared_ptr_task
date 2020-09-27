@@ -108,17 +108,17 @@ struct shared_ptr {
   }
 
   void reset() noexcept {
-    shared_ptr<T>(nullptr).swap(*this);
+    shared_ptr<T>().swap(*this);
   }
 
   template<typename U>
-  void reset(U* new_ptr) {
-    shared_ptr<T>(new_ptr).swap(*this);
+  void reset(U* ptr) {
+    shared_ptr<T>(ptr).swap(*this);
   }
 
   template<typename U, typename D>
-  void reset(U* new_ptr, D deleter) {
-    shared_ptr<T>(new_ptr, deleter).swap(*this);
+  void reset(U* ptr, D deleter) {
+    shared_ptr<T>(ptr, deleter).swap(*this);
   }
 
   T* get() const noexcept {
