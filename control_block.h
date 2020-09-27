@@ -9,8 +9,8 @@ struct control_block {
   void add_weak() noexcept;
   void del_ref() noexcept;
   void del_weak() noexcept;
-  std::size_t ref_count() const noexcept;
 
+  std::size_t ref_count() const noexcept;
   std::size_t weak_count() const noexcept;
 
   virtual ~control_block() = default;
