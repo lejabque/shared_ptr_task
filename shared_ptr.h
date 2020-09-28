@@ -12,7 +12,7 @@ struct shared_ptr {
       : cblock(nullptr),
         ptr(nullptr) {}
 
-  constexpr explicit shared_ptr(std::nullptr_t) noexcept
+  constexpr shared_ptr(std::nullptr_t) noexcept
       : shared_ptr() {}
 
   template<typename Y>
