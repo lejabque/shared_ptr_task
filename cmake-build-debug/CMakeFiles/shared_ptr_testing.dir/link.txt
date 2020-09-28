@@ -1,0 +1,1 @@
+/usr/bin/clang++  -g -fsanitize=undefined,address,leak -fno-sanitize-recover=all -D_GLIBCXX_DEBUG   CMakeFiles/shared_ptr_testing.dir/main.cpp.o CMakeFiles/shared_ptr_testing.dir/test_object.cpp.o CMakeFiles/shared_ptr_testing.dir/control_block.cpp.o  -o shared_ptr_testing  gtest/libgtest.a -lpthread 

@@ -15,3 +15,5 @@ add_executable(shared_ptr_testing
 set_property(TARGET shared_ptr_testing PROPERTY CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=undefined,address,leak -fno-sanitize-recover=all -D_GLIBCXX_DEBUG")
 target_link_libraries(shared_ptr_testing gtest)
+
+#test-pr

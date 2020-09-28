@@ -1,0 +1,6 @@
+/home/lejabque/Study/itmo/course2/cpp/shared_ptr_task/cmake-build-release/CMakeFiles/rebuild_cache.dir
+/home/lejabque/Study/itmo/course2/cpp/shared_ptr_task/cmake-build-release/CMakeFiles/edit_cache.dir
+/home/lejabque/Study/itmo/course2/cpp/shared_ptr_task/cmake-build-release/CMakeFiles/shared_ptr_testing.dir
+/home/lejabque/Study/itmo/course2/cpp/shared_ptr_task/cmake-build-release/gtest/CMakeFiles/rebuild_cache.dir
+/home/lejabque/Study/itmo/course2/cpp/shared_ptr_task/cmake-build-release/gtest/CMakeFiles/edit_cache.dir
+/home/lejabque/Study/itmo/course2/cpp/shared_ptr_task/cmake-build-release/gtest/CMakeFiles/gtest.dir

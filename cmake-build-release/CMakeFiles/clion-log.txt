@@ -1,0 +1,4 @@
+/home/lejabque/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/202.7319.72/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -G "CodeBlocks - Unix Makefiles" /home/lejabque/Study/itmo/course2/cpp/shared_ptr_task
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/lejabque/Study/itmo/course2/cpp/shared_ptr_task/cmake-build-release
