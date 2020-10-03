@@ -22,7 +22,7 @@ struct shared_ptr {
   template<typename Y, typename D>
   shared_ptr(Y* ptr, D deleter)
   try : ptr(ptr),
-        cblock(new regular_control_block<Y, D>(ptr, deleter)) {}
+        cblock(new regular_control_block<Y, D>(ptr, std::move(deleter))) {}
   catch (...) {
     deleter(ptr);
     throw;
